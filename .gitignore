@@ -3,7 +3,7 @@ HELP.md
 target/
 
 .env
-
+/bin/
 # Maven Wrapper
 # Keep the wrapper files in Git
 !.mvn/wrapper/maven-wrapper.jar
