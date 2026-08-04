@@ -2,8 +2,6 @@ HELP.md
 # Maven
 target/
 
-.env
-
 # Maven Wrapper
 # Keep the wrapper files in Git
 !.mvn/wrapper/maven-wrapper.jar
