@@ -36,7 +36,7 @@ public class DepartmentController {
 	}
 
 	@PatchMapping("/{id}")
-	public Department updateDepartment(@PathVariable("id") Long id, @RequestBody Department department) {
+	public Department updateDepartment(@PathVariable("id") Long id, @Valid @RequestBody Department department) {
 		return departmentService.updateDepartment(id, department);
 	}
 

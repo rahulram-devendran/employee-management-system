@@ -2,6 +2,7 @@ package com.rahulram.ems.service.impl;
 
 import java.util.List;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.rahulram.ems.entity.Department;
@@ -12,6 +13,8 @@ import com.rahulram.ems.service.DepartmentService;
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
 
+	private static final org.slf4j.Logger log = LoggerFactory.getLogger(DepartmentServiceImpl.class);
+
 	private final DepartmentRepository departmentRepository;
 
 	public DepartmentServiceImpl(DepartmentRepository departmentRepository) {
@@ -20,6 +23,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	@Override
 	public Department createDepartment(Department department) {
+		log.info("Department created");
 		return departmentRepository.save(department);
 	}
 
@@ -50,7 +54,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 		if (department.getDescription() != null && !department.getDescription().isBlank()) {
 			existingDepartment.setDescription(department.getDescription());
 		}
-
+		log.info("Department Updated");
 		return departmentRepository.save(existingDepartment);
 	}
 
@@ -58,7 +62,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 	public void deleteDepartment(Long id) {
 		Department existingDepartment = departmentRepository.findById(id)
 				.orElseThrow(() -> new DepartmentNotFoundException(id));
-		System.out.println("Department " + existingDepartment.getDepartmentName() + " Deleted");
+		log.info("Department '{}' deleted Successfully", existingDepartment.getDepartmentName());
 		departmentRepository.deleteById(id);
 	}
 
