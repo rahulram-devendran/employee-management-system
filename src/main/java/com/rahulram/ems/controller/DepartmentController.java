@@ -7,14 +7,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rahulram.ems.entity.Department;
 import com.rahulram.ems.service.DepartmentService;
 
+import jakarta.validation.Valid;
+
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/departments")
 public class DepartmentController {
 	private final DepartmentService departmentService;
 
@@ -22,30 +25,30 @@ public class DepartmentController {
 		this.departmentService = departmentService;
 	}
 
-	@GetMapping("/getDept/{id}")
-	public Department findDept(@PathVariable("id") Long id) {
-		return departmentService.getDepartment(id);
+	@GetMapping("/{id}")
+	public Department getDepartmentById(@PathVariable("id") Long id) {
+		return departmentService.getDepartmentById(id);
 	}
 
-	@GetMapping("/getAllDept")
-	public List<Department> getAllDept() {
+	@GetMapping
+	public List<Department> getAllDepartments() {
 		return departmentService.getAllDepartments();
 	}
 
-	@PatchMapping("/updateDept/{id}")
-	public Department updateDept(@PathVariable("id") Long id, Department department) {
+	@PatchMapping("/{id}")
+	public Department updateDepartment(@PathVariable("id") Long id, @RequestBody Department department) {
 		return departmentService.updateDepartment(id, department);
 	}
 
-	@DeleteMapping("/deletedept/{id}")
-	public String deleteDept(@PathVariable("id") Long id) {
-		departmentService.deleteDepartment(id);
-		return "Department Deleted";
+	@PostMapping
+	public Department createDepartment(@Valid @RequestBody Department department) {
+		return departmentService.createDepartment(department);
 	}
 
-	@PostMapping("/createDept")
-	public Department createDept(Department department) {
-		return departmentService.createDepartment(department);
+	@DeleteMapping("/{id}")
+	public String deleteDepartment(@PathVariable("id") Long id) {
+		departmentService.deleteDepartment(id);
+		return "Department Deleted";
 	}
 
 }

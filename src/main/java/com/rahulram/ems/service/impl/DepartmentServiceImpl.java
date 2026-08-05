@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.rahulram.ems.entity.Department;
+import com.rahulram.ems.exception.DepartmentNotFoundException;
 import com.rahulram.ems.repository.DepartmentRepository;
 import com.rahulram.ems.service.DepartmentService;
 
@@ -23,9 +24,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 	}
 
 	@Override
-	public Department getDepartment(Long id) {
+	public Department getDepartmentById(Long id) {
 		Department existingDepartment = departmentRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("No Department Found"));
+				.orElseThrow(() -> new DepartmentNotFoundException(id));
 		return existingDepartment;
 	}
 
@@ -37,7 +38,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 	@Override
 	public Department updateDepartment(Long id, Department department) {
 		Department existingDepartment = departmentRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("NO Department found"));
+				.orElseThrow(() -> new DepartmentNotFoundException(id));
 		if (department.getDepartmentCode() != null && !department.getDepartmentCode().isBlank()) {
 			existingDepartment.setDepartmentCode(department.getDepartmentCode());
 
@@ -55,9 +56,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 
 	@Override
 	public void deleteDepartment(Long id) {
-		Department existingdept = departmentRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("No Dept Found"));
-		System.out.println("Department " + existingdept.getDepartmentName() + " Deleted");
+		Department existingDepartment = departmentRepository.findById(id)
+				.orElseThrow(() -> new DepartmentNotFoundException(id));
+		System.out.println("Department " + existingDepartment.getDepartmentName() + " Deleted");
 		departmentRepository.deleteById(id);
 	}
 

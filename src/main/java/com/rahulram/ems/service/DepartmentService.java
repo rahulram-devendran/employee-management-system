@@ -7,7 +7,7 @@ import com.rahulram.ems.entity.Department;
 public interface DepartmentService {
 	Department createDepartment(Department department);
 
-	Department getDepartment(Long id);
+	Department getDepartmentById(Long id);
 
 	List<Department> getAllDepartments();
 
